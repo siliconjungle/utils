@@ -12,14 +12,14 @@ export const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export const throttle = (cb, delay = 1000) => {
+export const throttle = (fn, delay = 1000) => {
   let shouldWait = false
   let waitingArgs
   const timeoutFunc = () => {
     if (waitingArgs == null) {
       shouldWait = false
     } else {
-      cb(...waitingArgs)
+      fn(...waitingArgs)
       waitingArgs = null
       setTimeout(timeoutFunc, delay)
     }
@@ -31,7 +31,7 @@ export const throttle = (cb, delay = 1000) => {
       return
     }
 
-    cb(...args)
+    fn(...args)
     shouldWait = true
     setTimeout(timeoutFunc, delay)
   }
@@ -45,7 +45,7 @@ export const perf = (fn, name) => {
   console.log(`${name || 'Function call'}: ${ms}ms`)
 }
 
-export const heartbeat = (fn, delay) => {
+export const heartbeat = (fn, delay = 1000) => {
   fn()
   setTimeout(() => {
     heartbeat(fn, delay)
