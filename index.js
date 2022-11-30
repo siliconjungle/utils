@@ -46,8 +46,10 @@ export const perf = (fn, name) => {
 }
 
 export const heartbeat = (fn, delay = 1000) => {
-  fn()
-  setTimeout(() => {
-    heartbeat(fn, delay)
-  }, delay)
+  const running = fn()
+  if (running === true) {
+    setTimeout(() => {
+      heartbeat(fn, delay)
+    }, delay)
+  }
 }
